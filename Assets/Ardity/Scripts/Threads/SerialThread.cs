@@ -8,7 +8,7 @@
 
 using UnityEngine;
 
-using System.IO.Ports;
+// using System.IO.Ports;
 
 /**
  * This class contains methods that must be run from inside a thread and others

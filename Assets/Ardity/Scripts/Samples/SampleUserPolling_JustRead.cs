@@ -27,8 +27,10 @@ public class SampleUserPolling_JustRead : MonoBehaviour
     {
         string message = serialController.ReadSerialMessage();
 
-        if (message == null)
+        if (message == null){
+            Debug.Log("not valid");
             return;
+        }
 
         // Check if the message is plain data or a connect/disconnect event.
         if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
