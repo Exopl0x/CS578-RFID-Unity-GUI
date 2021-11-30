@@ -107,8 +107,7 @@ public class SerialController : MonoBehaviour
     // ------------------------------------------------------------------------
     void Update()
     {
-
-        if(Connect_To_Serial_Port.startConnection == false){        //waiting for user to click 'submit'
+        if(Connect_To_Serial_Port.messageSent == true){        //waiting for user to click 'submit'
             // If the user prefers to poll the messages instead of receiving them
             // via SendMessage, then the message listener should be null.
             if (messageListener == null)
