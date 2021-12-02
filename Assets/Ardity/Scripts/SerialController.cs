@@ -61,15 +61,15 @@ public class SerialController : MonoBehaviour
     // It creates a new thread that tries to connect to the serial device
     // and start reading from it.
     // ------------------------------------------------------------------------
-    void OnEnable()
-    {
-        serialThread = new SerialThreadLines(portName, 
-                                             baudRate, 
-                                             reconnectionDelay,
-                                             maxUnreadMessages);
-        thread = new Thread(new ThreadStart(serialThread.RunForever));
-        thread.Start();
-    }
+    // void OnEnable()
+    // {
+    //     serialThread = new SerialThreadLines(portName, 
+    //                                          baudRate, 
+    //                                          reconnectionDelay,
+    //                                          maxUnreadMessages);
+    //     thread = new Thread(new ThreadStart(serialThread.RunForever));
+    //     // thread.Start();
+    // }
 
     // ------------------------------------------------------------------------
     // Invoked whenever the SerialController gameobject is deactivated.
@@ -107,24 +107,26 @@ public class SerialController : MonoBehaviour
     // ------------------------------------------------------------------------
     void Update()
     {
-        // If the user prefers to poll the messages instead of receiving them
-        // via SendMessage, then the message listener should be null.
-        if (messageListener == null)
-            return;
+        if(Connect_To_Serial_Port.messageSent == true){        //waiting for user to click 'submit'
+            // If the user prefers to poll the messages instead of receiving them
+            // via SendMessage, then the message listener should be null.
+            if (messageListener == null)
+                return;
 
-        // Read the next message from the queue
-        string message = (string)serialThread.ReadMessage();
-        if (message == null)
-            return;
+            // Read the next message from the queue
+            string message = (string)serialThread.ReadMessage();
+            if (message == null)
+                return;
 
-        // Check if the message is plain data or a connect/disconnect event.
-        if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
-            messageListener.SendMessage("OnConnectionEvent", true);
-        else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
-            messageListener.SendMessage("OnConnectionEvent", false);
-        else
-            messageListener.SendMessage("OnMessageArrived", message);
-    }
+            // Check if the message is plain data or a connect/disconnect event.
+            if (ReferenceEquals(message, SERIAL_DEVICE_CONNECTED))
+                messageListener.SendMessage("OnConnectionEvent", true);
+            else if (ReferenceEquals(message, SERIAL_DEVICE_DISCONNECTED))
+                messageListener.SendMessage("OnConnectionEvent", false);
+            else
+                messageListener.SendMessage("OnMessageArrived", message);
+            }
+        }
 
     // ------------------------------------------------------------------------
     // Returns a new unread message from the serial device. You only need to
@@ -154,6 +156,17 @@ public class SerialController : MonoBehaviour
     public void SetTearDownFunction(TearDownFunction userFunction)
     {
         this.userDefinedTearDownFunction = userFunction;
+    }
+
+
+    public void StartThread(){
+        Debug.Log(portName.ToString());
+        serialThread = new SerialThreadLines(portName, 
+                                             baudRate, 
+                                             reconnectionDelay,
+                                             maxUnreadMessages);
+        thread = new Thread(new ThreadStart(serialThread.RunForever));
+        thread.Start();
     }
 
 }
