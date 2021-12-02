@@ -19,8 +19,7 @@ public class Connect_To_Serial_Port : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();
-        // https://maker.pro/arduino/tutorial/how-to-permanently-store-data-on-your-arduino        
+        serialController = GameObject.Find("SerialController").GetComponent<SerialController>();      
     }
 
     // Update is called once per frame
@@ -30,10 +29,11 @@ public class Connect_To_Serial_Port : MonoBehaviour
         // Receive data
         //---------------------------------------------------------------------
         if(messageSent == true){
+            
             string message = serialController.ReadSerialMessage();
-
             if (message == null)
                 return;
+            Debug.Log(message);
 
             // Check if the message is plain data or a connect/disconnect event.
             if (ReferenceEquals(message, SerialController.SERIAL_DEVICE_CONNECTED))
@@ -44,6 +44,7 @@ public class Connect_To_Serial_Port : MonoBehaviour
                 Debug.Log("Message arrived: " + message);
 
         }
+
     }
 
     public void ChangeCom(){
