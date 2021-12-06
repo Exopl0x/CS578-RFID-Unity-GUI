@@ -48,9 +48,6 @@ public class Connect_To_Serial_Port : MonoBehaviour
     }
 
     public void ChangeCom(){
-        //---------------------------------------------------------------------
-        // Send data
-        //---------------------------------------------------------------------
         serialController.portName = com_serialport.text;
         serialController.StartThread();
         startConnection = true;

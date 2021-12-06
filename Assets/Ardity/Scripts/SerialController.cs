@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Ardity (Serial Communication for Arduino + Unity)
  * Author: Daniel Wilches <dwilches@gmail.com>
  *
@@ -160,7 +160,6 @@ public class SerialController : MonoBehaviour
 
 
     public void StartThread(){
-        Debug.Log(portName.ToString());
         serialThread = new SerialThreadLines(portName, 
                                              baudRate, 
                                              reconnectionDelay,
